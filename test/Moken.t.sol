@@ -8,6 +8,7 @@ import {Property} from "@contracts/nft/ERC721/Property.sol";
 
 contract MokenTest is Test {
     Moken moken;
+    Property property;
     address mokenOwner = vm.addr(1);
     address propertyOwner = vm.addr(2);
     address newMokenOwner = vm.addr(3);
@@ -18,7 +19,7 @@ contract MokenTest is Test {
         moken = new Moken();
 
         vm.prank(propertyOwner);
-        address property = moken.newProperty(
+        address property_address = moken.newProperty(
             "name",
             "symbol",
             "uri",
@@ -26,11 +27,10 @@ contract MokenTest is Test {
             propertyOwner
         );
 
+
         vm.deal(tenant, 100 ether);
         vm.prank(tenant);
-        (bool success, ) = property.call{value: 0.1 ether}(
-            abi.encodeWithSignature("bookingADay(uint256)", 8)
-        );
+        Property(property_address).booking{value: 0.4 ether}(8, 11);
     }
 
     function testAddNewOwner() public {

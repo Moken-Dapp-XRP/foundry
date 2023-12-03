@@ -24,7 +24,7 @@ contract Property is
 
     event FeePayment(address owner, uint256 amount);
     event Withdraw(address owner, uint256 amount);
-    event NewBooking(uint256 day, address tenant);
+    event NewBooking(uint256 startDay, uint256 endDay, address tenant);
     event CheckIn(uint256 day, address tenant);
 
     error FeePaymentFailed(address owner, uint256 amount);
@@ -32,7 +32,7 @@ contract Property is
     error GrantAllowanceFailed(address sender, uint256 amount);
     error CheckInFailed(uint256 day, address tenant);
     error DayAlreadyBooked(address tenant, uint256 day);
-    error BookingFailed(address tenant, uint256 day, uint256 amount);
+    error BookingFailed(address tenant, uint256 startDay, uint256 endDay, uint256 amount);
 
     constructor(
         string memory _name,
@@ -70,31 +70,12 @@ contract Property is
         _grantRole(OWNER_ROLE, _newOwner);
     }
 
-    function bookingADay(uint256 _day) public payable {
-        if (
-            property.bookings[_day].status == true ||
-            msg.value < property.rentPerDay
-        ) {
-            revert BookingFailed(msg.sender, _day, msg.value);
-        } else {
-            uint256 tokenId = _nextTokenId++;
-            _payFee(msg.value);
-            _safeMint(msg.sender, tokenId);
-            _setTokenURI(tokenId, property.uri);
-
-            property.bookings[_day] = BookingData({
-                tenant: msg.sender,
-                status: true
-            });
-        }
-    }
-
-    function bookingAPeriod(uint256 _startDay, uint256 _endDay) public payable {
+    function booking(uint256 _startDay, uint256 _endDay) public payable {
         if (
             msg.value < property.rentPerDay * (_endDay - _startDay + 1) ||
             _startDay > _endDay
         ) {
-            revert BookingFailed(msg.sender, _startDay, msg.value);
+            revert BookingFailed(msg.sender, _startDay, _endDay, msg.value);
         } else {
             for (uint256 i = _startDay; i <= _endDay; i++) {
                 if (property.bookings[i].status == true) {

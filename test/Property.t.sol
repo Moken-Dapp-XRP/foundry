@@ -42,17 +42,74 @@ contract PropertyTest is Test {
     }
 
     function testCheckInADay() public {
-        uint256 day = 8;
+        uint256 _day = 8;
 
         vm.deal(tenant, 100 ether);
         vm.prank(tenant);
-        (bool booking, ) = address(property).call{value: 0.1 ether}(
-            abi.encodeWithSignature("bookingADay(uint256)", day)
-        );
+        property.booking{value: 0.1 ether}(_day, _day);
 
         vm.prank(tenant);
-        bool checkIn = property.checkIn(day, tenant);
+        bool checkIn = property.checkIn(_day, tenant);
 
         assertTrue(checkIn);
+    }
+
+    function testCheckInAPeriod() public {
+        uint256 _startDay = 8;
+        uint256 _endDay = 10;
+
+        vm.deal(tenant, 100 ether);
+        vm.prank(tenant);
+        property.booking{value: 0.3 ether}(_startDay, _endDay);
+
+        bool checkIn = property.checkIn(9, tenant);
+
+        assertTrue(checkIn);
+    }
+
+    function testCheckInWithWrongDay() public {
+        uint256 _startDay = 8;
+        uint256 _endDay = 10;
+
+        vm.deal(tenant, 100 ether);
+        vm.prank(tenant);
+        property.booking{value: 0.3 ether}(_startDay, _endDay);
+
+        bool checkIn = property.checkIn(11, tenant);
+
+        assertFalse(checkIn);
+    }
+
+    function testCheckInWithWrongTenant() public {
+        uint256 _startDay = 8;
+        uint256 _endDay = 10;
+
+        vm.deal(tenant, 100 ether);
+        vm.prank(tenant);
+        property.booking{value: 0.3 ether}(_startDay, _endDay);
+
+        vm.prank(owner);
+        bool checkIn = property.checkIn(9, owner);
+
+        assertFalse(checkIn);
+    }
+
+    function testBookingWithDayAlreadyBooked() public {
+        uint256 _startDay = 8;
+        uint256 _endDay = 10;
+
+        vm.deal(tenant, 100 ether);
+        vm.prank(tenant);
+        property.booking{value: 0.3 ether}(_startDay, _endDay);
+
+        vm.prank(tenant);
+        bool checkIn = property.checkIn(9, tenant);
+
+        assertTrue(checkIn);
+
+        vm.prank(tenant);
+        vm.expectRevert();
+        property.booking{value: 0.3 ether}(_startDay + 1, _endDay + 1);
+
     }
 }
