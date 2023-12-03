@@ -8,6 +8,7 @@ import {Moken} from "@contracts/factory/Moken.sol";
 import {SetupProperty} from "@setup/SetupProperty.sol";
 
 contract DeployLilium is Script {
+    address moken = 0x0002Af258b86fAAC590630BB2a07740576E134b8;
     SetupProperty helperConfig = new SetupProperty();
 
     function run() external {
@@ -18,10 +19,8 @@ contract DeployLilium is Script {
             uint256 _rentPerDay,
             address _owner
         ) = helperConfig.propertyArgs();
-        address property;
-        address mokenAddress = 0x0002Af258b86fAAC590630BB2a07740576E134b8;
 
-        (bool success, bytes memory data) = mokenAddress.call(
+        (bool success, bytes memory data) = moken.call(
             abi.encodeWithSignature(
                 "newProperty(string,string,string,uint256,address)",
                 _name,
@@ -32,12 +31,15 @@ contract DeployLilium is Script {
             )
         );
 
-        require(success, "Failed to call newProperty");
-        
-        assembly {
-            property := mload(add(data, 32))
+        if (!success) {
+            console.log("Error deploying property");
+            return;
+        } else {
+            address property;
+            assembly {
+                property := mload(add(data, 32))
+            }
+            console.log("Property address:", property);
         }
-
-        console.log("Property address:", property);
     }
 }

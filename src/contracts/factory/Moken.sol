@@ -9,6 +9,8 @@ contract Moken is AccessControl {
 
     bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
 
+    mapping(address => address[]) public propertiesByOwner;
+
     event FeeReceived(address owner, uint256 amount);
     event Withdraw(address owner, uint256 amount);
     event NewProperty(address indexed property, address indexed owner);
@@ -46,9 +48,16 @@ contract Moken is AccessControl {
             _rentPerDay,
             _owner
         );
+        propertiesByOwner[_owner].push(address(property));
         properties.push(address(property));
         emit NewProperty(address(property), _owner);
         return address(property);
+    }
+
+    function getAllPropertiesByOwner(
+        address _owner
+    ) public view returns (address[] memory) {
+        return propertiesByOwner[_owner];
     }
 
     function getAllProperties() public view returns (address[] memory) {

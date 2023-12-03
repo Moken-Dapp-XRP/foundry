@@ -11,11 +11,11 @@ contract SetupProperty is Script {
     mapping(uint256 => PropertyArgs) public chainIdToNetworkConfig;
 
     constructor() {
-        chainIdToNetworkConfig[44787] = getCeloPropertyArgs();
+        chainIdToNetworkConfig[1440002] = getXrpPropertyArgs();
         propertyArgs = chainIdToNetworkConfig[block.chainid];
     }
 
-    function getCeloPropertyArgs()
+    function getXrpPropertyArgs()
         internal
         pure
         returns (PropertyArgs memory XrpPropertyArgs)

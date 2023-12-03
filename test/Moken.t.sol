@@ -27,7 +27,6 @@ contract MokenTest is Test {
             propertyOwner
         );
 
-
         vm.deal(tenant, 100 ether);
         vm.prank(tenant);
         Property(property_address).booking{value: 0.4 ether}(8, 11);
@@ -45,6 +44,18 @@ contract MokenTest is Test {
         moken.newProperty("name", "symbol", "uri", 0.1 ether, propertyOwner);
         address[] memory properties = moken.getAllProperties();
         assertEq(properties.length, 2);
+    }
+
+    function testGetAllProperties() public {
+        address[] memory properties = moken.getAllProperties();
+        assertEq(properties.length, 1);
+    }
+
+    function testGetAllPropertiesByOwner() public {
+        address[] memory propertiesByOwner = moken.getAllPropertiesByOwner(
+            propertyOwner
+        );
+        assertEq(propertiesByOwner.length, 1);
     }
 
     function testWithdraw() public {
