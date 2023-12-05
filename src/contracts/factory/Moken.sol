@@ -5,7 +5,7 @@ import {Property} from "@contracts/nft/ERC721/Property.sol";
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract Moken is AccessControl {
-    address[] public properties;
+    address[] private properties;
 
     bytes32 public constant OWNER_ROLE = keccak256("OWNER_ROLE");
 
