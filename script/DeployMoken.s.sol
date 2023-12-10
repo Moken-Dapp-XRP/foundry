@@ -6,7 +6,7 @@ import {Script} from "forge-std/Script.sol";
 import {console} from "forge-std/console.sol";
 import {Moken} from "@contracts/factory/Moken.sol";
 
-contract DeployLilium is Script {
+contract DeployMoken is Script {
 
     function run() external {
         vm.startBroadcast(vm.envUint("PRIVATE_KEY"));

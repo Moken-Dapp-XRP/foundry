@@ -17,7 +17,7 @@ endef
 define deploy_property
 	$(START_LOG)
 	@forge test
-	@forge script script/DeployProperty.s.sol --rpc-url $(RPC_URL) --broadcast -vvv
+	@forge script script/DeployProperty.s.sol --rpc-url $(RPC_URL) --broadcast -vvvvv
 	$(END_LOG)
 endef
 

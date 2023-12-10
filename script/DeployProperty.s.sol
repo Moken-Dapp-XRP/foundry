@@ -7,11 +7,12 @@ import {console} from "forge-std/console.sol";
 import {Moken} from "@contracts/factory/Moken.sol";
 import {SetupProperty} from "@setup/SetupProperty.sol";
 
-contract DeployLilium is Script {
-    address moken = 0x0002Af258b86fAAC590630BB2a07740576E134b8;
+contract DeployProperty is Script {
+    address moken = 0x330D0349ed3c5A8a212CC15EeBA92A6b4807dDF4;
     SetupProperty helperConfig = new SetupProperty();
 
     function run() external {
+        vm.startBroadcast(vm.envUint("PRIVATE_KEY"));
         (
             string memory _name,
             string memory _symbol,
@@ -30,6 +31,7 @@ contract DeployLilium is Script {
                 _owner
             )
         );
+        vm.stopBroadcast();
 
         if (!success) {
             console.log("Error deploying property");

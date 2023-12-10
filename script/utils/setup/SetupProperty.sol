@@ -23,7 +23,7 @@ contract SetupProperty is Script {
         XrpPropertyArgs = PropertyArgs({
             name: "Moken Property",
             symbol: "MKP",
-            uri: "https://ipfs.io/ipfs/QmXiQTGp9aKAVrvCF8U7X8dnytXvf5Z44EVA2UPeTEV9gT/5.json",
+            uri: "https://ipfs.io/ipfs/QmXiQTGp9aKAVrvCF8U7X8dnytXvf5Z44EVA2UPeTEV9gT/2.json",
             rentPerDay: 340,
             owner: 0xFb05c72178c0b88BFB8C5cFb8301e542A21aF1b7
         });
