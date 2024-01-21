@@ -27,7 +27,7 @@ make test
 
 - *Run the command below to deploy the contracts:*
 ```bash
-make deploy
+make moken
 ```
 
 Moken Contract on EVM-Sidechain XRP: 0x330D0349ed3c5A8a212CC15EeBA92A6b4807dDF4
