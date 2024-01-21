@@ -1,7 +1,7 @@
 # LOADING ENV FILE
 -include .env
 
-.PHONY: moken property
+.PHONY: moken property setup
 
 # DEFAULT VARIABLES
 START_LOG = @echo "==================== START OF LOG ===================="
@@ -21,7 +21,8 @@ define deploy_property
 	$(END_LOG)
 endef
 
-env: .env.tmpl
+setup: .env.tmpl
+	forge install
 	cp .env.tmpl .env
 
 moken:
