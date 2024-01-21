@@ -66,4 +66,4 @@ $ cast --help
 ```
 
 
-Moken Contract on Mainnet: 0x96d281fd702AFA2E4B87545727bba39776D1a5F2
+Moken Contract on EVM-Sidechain XRP: 0x330D0349ed3c5A8a212CC15EeBA92A6b4807dDF4
