@@ -9,61 +9,25 @@ Foundry consists of:
 -   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
 -   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
 
-## Documentation
+## How to run:
 
-https://book.getfoundry.sh/
+- *Run the command below to generate the .env file and install the project dependencies contained in the `./.gitmodules` file:*
 
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```bash
+make setup
 ```
 
-### Test
-
-```shell
-$ forge test
+- *Run the command below to execute the tests:*
+```bash
+make test
 ```
 
-### Format
+> [!IMPORTANT]
+> Before running the command below, confirm that the `./.env` file contains all the necessary variables for deployment.
 
-```shell
-$ forge fmt
+- *Run the command below to deploy the contracts:*
+```bash
+make deploy
 ```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
-
 
 Moken Contract on EVM-Sidechain XRP: 0x330D0349ed3c5A8a212CC15EeBA92A6b4807dDF4
